@@ -1,26 +1,8 @@
 // DEPENDENCIES
-require("dotenv").config();
 const express = require("express");
 const app = express();
-
-console.log("PG_URI:", process.env.PG_URI);
-
 const { Sequelize } = require("sequelize");
-
-// SEQUELIZE CONNECTION
-// const sequelize = new Sequelize({
-//   storage: process.env.PG_URI,
-//   dialect: "postgres",
-//   username: "postgres",
-//   password: "tmcPassword1#@",
-// });
-
-// try {
-//   sequelize.authenticate();
-//   console.log(`Connected with Sequelize at ${process.env.PG_URI}`);
-// } catch (err) {
-//   console.log(`Unable to connect to PG: ${err}`);
-// }
+const bands = require("./controllers/bands_controller");
 
 // CONFIGURATION / MIDDLEWARE
 require("dotenv").config();
@@ -33,6 +15,10 @@ app.get("/", (req, res) => {
     message: "Welcome to the Tour API",
   });
 });
+
+// CONTROLLERS
+const bandsController = require("./controllers/bands_controller");
+app.use("/bands", bandsController);
 
 // LISTEN
 app.listen(process.env.PORT, () => {
